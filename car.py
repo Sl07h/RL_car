@@ -10,8 +10,8 @@ class Car(object):
         self.y = 100                                        # координата y
         self.angle = 0.0                                    # угол поворота
         self.V = 3                                          # скорость
-        self.vel_x = self.V * sin(radians(self.angle))      # скорость по оси x
-        self.vel_y = self.V * cos(radians(self.angle))      # скорость по оси y
+        self.vel_x = self.V * cos(radians(self.angle))      # скорость по оси x
+        self.vel_y = self.V * sin(radians(self.angle))      # скорость по оси y
 
         self.original_image = pygame.image.load('car.png')
         self.image = self.original_image
@@ -20,11 +20,11 @@ class Car(object):
 
     def update(self):
         """ Обновление координат """
-        self.vel_x = self.V * sin(radians(self.angle))
-        self.vel_y = self.V * cos(radians(self.angle))
+        self.vel_x = self.V * cos(radians(self.angle))
+        self.vel_y = self.V * sin(radians(self.angle))
         self.x += self.vel_x
         self.y += self.vel_y
-        self.image = pygame.transform.rotate(self.original_image, self.angle)
+        self.image = pygame.transform.rotate(self.original_image, -self.angle)
         x, y = self.rect.center  # Save its current center.
         self.rect = self.image.get_rect()  # Replace old rect with new rect.
 
@@ -38,9 +38,9 @@ class Car(object):
         elif key[pygame.K_UP]:
             self.V = 3
         if key[pygame.K_RIGHT]:
-            self.angle = (self.angle - 3) % 360
-        elif key[pygame.K_LEFT]:
             self.angle = (self.angle + 3) % 360
+        elif key[pygame.K_LEFT]:
+            self.angle = (self.angle - 3) % 360
             
     def draw(self, surface):
         """ Отрисовка машины """
